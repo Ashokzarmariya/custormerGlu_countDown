@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import CountDown from "./Components/CountDown";
+import "./App.css";
 
 function App() {
+  const [status, setStatus] = useState("PAUSE");
+  const timeLimit = 35;
+  const [time, setTime] = useState(timeLimit);
+  const handleRestart = () => setTime(timeLimit);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex mx-20">
+      <div className="w-[1px] h-screen bg-white"></div>
+      <div className="App  min-h-[100vh] flex flex-col justify-center flex-1 text-white">
+      
+      <div>
+        <h1 className="text-3xl font-bold py-5 mx-10">Count Down</h1>
+        <hr />
+        <CountDown
+          status={status}
+          timeLimit={timeLimit}
+          time={time}
+          setTime={setTime}
+        />
+        <hr />
+        <div className="space-x-10 py-10 font-bold text-black mx-10">
+          <button
+            className="px-8 rounded-sm py-3 bg-[#2caeff]"
+            onClick={() => {
+              status === "PAUSE" ? setStatus("PLAY") : setStatus("PAUSE");
+            }}
+          >{`${status === "PAUSE" ? "PLAY" : "PAUSE"}`}</button>
+          <button
+            className="px-8 rounded-sm py-3 bg-gray-400  "
+            onClick={handleRestart}
+          >
+            RESTART
+          </button>
+        </div>
+      </div>
     </div>
+    </div>
+    
   );
 }
 
